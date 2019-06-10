@@ -9,7 +9,7 @@
 
 import sys
 
-class point:
+class Point:
 
 
     def __init__(self): 
