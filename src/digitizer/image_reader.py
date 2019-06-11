@@ -7,9 +7,9 @@
 #
 #######################################################################################
 import cv2
-import imutils
 import numpy as np
 import tkinter as tk
+from src.digitizer.point import Point
 
 
 class ImageReader:
@@ -63,7 +63,7 @@ class ImageReader:
                 approx = cv2.approxPolyDP(c, 0.00001*cv2.arcLength(c, True), True)
                 cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 2)
                 for point in c:
-                    points_array.append( (point[0][0], point[0][1] ) )
+                    points_array.append(Point(point[0][0], point[0][1]))
                 points[layer] = points_array
                 layer += 1
         return canvas, points

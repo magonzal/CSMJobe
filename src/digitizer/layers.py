@@ -9,7 +9,7 @@
 
 import sys
 
-class layers:
+class Layers:
 
 
     def __init__(self): 
