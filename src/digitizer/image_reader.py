@@ -97,7 +97,7 @@ class ImageReader:
         """
         Takes the median of the image based on noise level
         :param noise: Noise level
-        :return: Meidan Blurred Image
+        :return: Median Blurred Image
         """
         return cv2.medianBlur(self.image, noise)
 
