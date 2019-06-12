@@ -5,7 +5,6 @@ from numpy import ma
 from matplotlib import scale as mscale
 from matplotlib import transforms as mtransforms
 from matplotlib import rcParams
-%matplotlib inline
 
 #Function that takes in the current layer and plots the lines onto the same
 #plot to view the log from the points.
