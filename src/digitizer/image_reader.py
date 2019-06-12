@@ -19,7 +19,7 @@ class ImageReader:
     def __init__(self, image): 
         """
         Initializes ImageReader object and then scales it by factor.
-        :param image: Path of the image
+        :param image: OpenCV object
         """
         self.image = image
         root = tk.Tk()
