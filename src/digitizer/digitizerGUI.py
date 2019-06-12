@@ -133,6 +133,8 @@ class App:
         # Save image
         img.save("victory.png", "png")
 
+        # here is a comment
+
         exit()
 
 
