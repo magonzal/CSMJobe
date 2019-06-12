@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 import tkinter as tk
 from point import Point
-from layers import Layers
+from layer import Layer
 from csv_creation import CSVCreation
 
 
@@ -61,7 +61,7 @@ class ImageReader:
         
         for c in contours:
             if cv2.contourArea(c) > 200:
-                layer = Layers(layer_id)
+                layer = Layer(layer_id)
                 points_array = []
 
                 approx = cv2.approxPolyDP(c, 0.00001*cv2.arcLength(c, True), True)
