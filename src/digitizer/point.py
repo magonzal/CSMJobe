@@ -25,7 +25,7 @@ class Point:
 
         :return:
         """
-        return self.x
+        return self._x
 
     @property
     def y(self):
@@ -33,7 +33,7 @@ class Point:
 
         :return:
         """
-        return self.y
+        return self._y
 
     @x.setter
     def x(self, x):
@@ -42,7 +42,7 @@ class Point:
         :param x:
         :return:
         """
-        self.x = x
+        self._x = x
 
     @y.setter
     def y(self, y):
@@ -51,4 +51,4 @@ class Point:
         :param y:
         :return:
         """
-        self.y = y
+        self._y = y

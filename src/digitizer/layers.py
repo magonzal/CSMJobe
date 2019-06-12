@@ -1,31 +1,47 @@
 #!/usr/bin/env python
 
-#######################################################################################
+##############################################################################
 # Name:         Layers 
 #
-# Last Updated: 5/18/19
+# Last Updated: 6/12/19
 #
-#######################################################################################
-
+##############################################################################
 import sys
 
 class Layers:
 
 
-    def __init__(self): 
-       self.points = [] # array of point objects (i think)
-       self.covered = False # determine if segment of outcrop is usable
-       # Implement the following if time permits: 
-       # - rockColor
-       # - rockName
-       # - rockType
+    def __init__(self, layer_id):
+        self.layer_id = layer_id # serial id of layer (Cannot reset it)
+        self._layer_name = str(layer_id) # name of the layer
+        self._points = [] # array of point objects 
+        self._covered = False # determine if segment of outcrop is usable
 
+    # Getter functions
 
-    def getPoints(self):
-        return self.points
+    @property
+    def layer_name(self):
+        return self._layer_name
 
+    @property
+    def points(self):
+        return self._points
 
-    # TODO
-    def setPoints(self):
-        return 0
+    @property 
+    def covered(self):
+        return self._covered
+
+    # Setter functions
+
+    @layer_name.setter
+    def layer_name(self, name):
+        self._layer_name = name
+
+    @points.setter
+    def points(self, points):
+        self._points = points
+
+    @covered.setter
+    def covered(self, covered):
+        self._covered = covered
     

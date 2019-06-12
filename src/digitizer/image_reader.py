@@ -9,7 +9,9 @@
 import cv2
 import numpy as np
 import tkinter as tk
-from src.digitizer.point import Point
+from point import Point
+from layers import Layers
+from csv_creation import CSVCreation
 
 
 class ImageReader:
@@ -54,19 +56,25 @@ class ImageReader:
         thresh = cv2.Canny(self.image, 10, 55)
         contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
         canvas = np.add(np.zeros(self.image.shape, np.uint8), 255)
-        points = {}
-        layer = 1
+        layers = []
+        layer_id = 1
         
         for c in contours:
             if cv2.contourArea(c) > 200:
+                layer = Layers(layer_id)
                 points_array = []
+
                 approx = cv2.approxPolyDP(c, 0.00001*cv2.arcLength(c, True), True)
                 cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 2)
                 for point in c:
                     points_array.append(Point(point[0][0], point[0][1]))
-                points[layer] = points_array
-                layer += 1
-        return canvas, points
+                
+                layer.layer_name="test"
+                layer.points = points_array
+                layers.append(layer)
+                # append layer to layers aray
+                layer_id += 1
+        return canvas, layers
 
     def filter(self, kernel=(5, 5)):
         """
@@ -102,9 +110,13 @@ class ImageReader:
         return cv2.medianBlur(self.image, noise)
 
 
+
+
 def main():
     test = cv2.imread('test3.jpg') 
     canv, _ = ImageReader(test).prune()
+    woop = CSVCreation(_)
+    woop.output_csv()
     cv2.imshow('test', canv)
     k = cv2.waitKey(0)
     if k == 27:
