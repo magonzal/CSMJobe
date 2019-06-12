@@ -8,7 +8,7 @@
 ##############################################################################
 import sys
 
-class Layers:
+class Layer:
 
 
     def __init__(self, layer_id):
