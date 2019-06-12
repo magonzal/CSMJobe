@@ -1,9 +1,8 @@
-import pytest
 from src.digitizer.point import Point
 
 
 def test_get_point():
-    point = Point(2,2)
+    point = Point(2, 2)
 
     assert point.x == 2
     assert point.y == 2
