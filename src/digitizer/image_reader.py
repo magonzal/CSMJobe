@@ -64,7 +64,7 @@ class ImageReader:
                 layer = Layer(layer_id)
                 points_array = []
 
-                approx = cv2.approxPolyDP(c, 0.00001*cv2.arcLength(c, True), True)
+                approx = cv2.approxPolyDP(c, 0.0001*cv2.arcLength(c, True), True)
                 cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 5)
                 for point in c:
                     points_array.append(Point(point[0][0], point[0][1]))
