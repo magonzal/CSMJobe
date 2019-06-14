@@ -14,9 +14,9 @@ class plotCreator:
         self.log_data = pd.read_csv('log_data')
         self.log_data.head(0)
 
-    def getLayers(self, log_data):
+    def getLayers(self):
         layer_count = 0
-        for layer in log_data.Layer:
+        for layer in self.log_data.Layer:
             if(layer>layer_count):
                 layer_count=layer
         for layer_number in range(layer_count):
