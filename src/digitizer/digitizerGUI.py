@@ -142,18 +142,6 @@ class Gui:
         # Save image
         img.save("victory.png", "png")
 
-<<<<<<< HEAD
-        tkinter.messagebox.askok('!', 'You are now exiting the GUI.  Your updated image has been saved '
-                                      'as "victory.png" on your decive.')
-
-        self.window.quit()
-        exit()
-=======
         tkinter.messagebox.askokcancel('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your decive.')
 
-        # here is a comment
-        # here is a comment
-
         self.window.quit()
-
->>>>>>> 632f6da891925f3fc76041a42be6ae8921a9a6d6
