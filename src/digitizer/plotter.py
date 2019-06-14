@@ -14,20 +14,21 @@ class plotCreator:
         self.log_data = pd.read_csv('log_data')
         self.log_data.head(0)
 
-    def getLayers(log_data):
+    def getLayers(self):
         layer_count = 0
-        for layer in log_data.Layer:
+        for layer in self.log_data.Layer:
             if(layer>layer_count):
                 layer_count=layer
         for layer_number in range(layer_count):
             plotter(layer_number)
+        returnImage()
 
-    def plotter(current_layer_number):
-        current_layer = pd.DataFrame(log_data)
+    def plotter(self, current_layer_number):
+        current_layer = pd.DataFrame(self.log_data)
         current_layer = current_layer[current_layer.Layer == current_layer_number]
         plt.xticks([])
         plt.yticks([])
         plt.plot(current_layer.x, current_layer.y, color='black', linewidth=5.0)
 
-    def returnImage():
+    def returnImage(self):
         plt.savefig('log_data.png', transparent='true', dpi=800)
