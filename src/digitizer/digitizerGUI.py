@@ -13,14 +13,14 @@ from tkinter import filedialog
 import cv2
 import os
 import io
-from PIL import Image, ImageTk, ImageGrab, ImageDraw, EpsImagePlugin
+from PIL import Image, ImageTk, ImageDraw, EpsImagePlugin
 import PIL.ImageTk
 import PIL.Image
 from tkinter.colorchooser import askcolor
 from tkinter.filedialog import askopenfilename
 import subprocess
 
-class App:
+class Gui:
     DEFAULT_PEN_SIZE = 5.0
     line_width = 5.0
     DEFAULT_COLOR = 'black'
