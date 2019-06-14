@@ -22,7 +22,11 @@ def main(argv):
     print('here')
     image_reader = ImageReader(cv_image)
     canvas, layers = image_reader.prune()
-
+    cv2.imshow('test', canvas)
+    k = cv2.waitKey(0)
+    if k == 27:
+        cv2.destroyAllWindows()
+    print('hereeeeeeeeeeeeeeeeeeeeeeeeee')
     csv = CSVCreation(layers).output_csv()
     plotCreator(csv).getLayers()
 

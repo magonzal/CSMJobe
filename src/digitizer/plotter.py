@@ -32,4 +32,4 @@ class plotCreator:
         plt.plot(current_layer.x, current_layer.y, color='black', linewidth=5.0)
 
     def returnImage(self):
-        plt.savefig('log_data.png', transparent='true', dpi=800)
+        plt.savefig('log_data.png', transparent='true', dpi=3200)
