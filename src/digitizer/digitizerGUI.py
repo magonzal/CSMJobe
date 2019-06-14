@@ -68,6 +68,10 @@ class Gui:
         self.color_button = Button(self.window, text="Color", command=self.choose_color)
         self.color_button.pack(side='top', fill='both', expand=False)
 
+        # Button that lets the user define where the origin is
+        self.set_origin_button = Button(self.window, text="Next ->", command=self.changeImg)
+        self.set_origin_button.pack(side='top', fill='both', expand=False)
+
         # Button that user clicks to let the program know they are done with their edits
         self.done_button = tkinter.Button(self.window, text="Done", command=self.save_image)
         self.done_button.pack(side='bottom', fill='both', expand=False)
@@ -109,6 +113,11 @@ class Gui:
         self.active_button = some_button
         self.eraser_on = eraser_mode
 
+    # ------- Callback for updating the image ------- #
+    def changeImg(self):
+        self.img = PhotoImage(file="log_data.png")
+        self.canvas.itemconfig(self.imgArea, image=self.img)
+
     # ------- Callback for paint ------- #
     def paint(self, event):
         self.line_width = self.choose_size_button.get()
@@ -133,14 +142,8 @@ class Gui:
         # Save image
         img.save("victory.png", "png")
 
-<<<<<<< HEAD
-        tkinter.messagebox.askok('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your decive.')
-
-        # here is a comment
-=======
-        # here is a comment
+        tkinter.messagebox.askok('!', 'You are now exiting the GUI.  Your updated image has been saved '
+                                      'as "victory.png" on your decive.')
 
         self.window.quit()
->>>>>>> 3ada2ac7699ca82706e222e201a572424e1282d9
-
         exit()
