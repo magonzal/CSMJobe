@@ -11,7 +11,7 @@ from matplotlib import rcParams
 #Plotter function that will draw each layer on top of the other on the same plot
 class plotCreator:
     def __init__(self, log_data):
-        self.log_data = pd.read_csv('log_data')
+        self.log_data = pd.read_csv(log_data)
         self.log_data.head(0)
 
     def getLayers(self):
