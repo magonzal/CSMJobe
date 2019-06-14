@@ -23,7 +23,7 @@ def main(argv):
     canvas, layers = image_reader.prune()
 
     csv = CSVCreation(layers)
-    plot = plotCreator(csv)
+    plot = plotCreator(csv).getLayers()
 
 
 if __name__ == '__main__':
