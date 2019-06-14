@@ -139,4 +139,3 @@ class App:
 
 
 # Create a window and pass it to the Application object
-App(tkinter.Tk(), "Geologic Log Edit")
