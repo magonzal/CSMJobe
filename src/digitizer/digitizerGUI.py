@@ -116,7 +116,7 @@ class Gui:
     # ------- Callback for updating the image ------- #
     def changeImg(self):
         self.img = PhotoImage(file="log_data.png")
-        self.canvas.itemconfig(self.imgArea, image=self.img)
+        self.canvas.itemconfig(self.height*self.width, image=self.img)
 
     # ------- Callback for paint ------- #
     def paint(self, event):
