@@ -133,9 +133,8 @@ class App:
         # Save image
         img.save("victory.png", "png")
 
+        tkinter.messagebox.askok('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your decive.')
+
         # here is a comment
 
         exit()
-
-
-# Create a window and pass it to the Application object
