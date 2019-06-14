@@ -113,7 +113,7 @@ class ImageReader:
 
 
 def main():
-    test = cv2.imread('t.png')
+    test = cv2.imread('victory.png')
     canv, _ = ImageReader(test).prune()
     woop = CSVCreation(_)
     woop.output_csv()
