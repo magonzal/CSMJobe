@@ -12,7 +12,7 @@ from matplotlib import rcParams
 class plotCreator:
     def __init__(self, log_data):
         self.log_data = pd.read_csv(log_data)
-        self.log_data.head(0)
+        self.log_data.head(1)
 
     def getLayers(self):
         layer_count = 0
@@ -25,6 +25,7 @@ class plotCreator:
 
     def plotter(self, current_layer_number):
         current_layer = pd.DataFrame(self.log_data)
+        print(self.log_data)
         current_layer = current_layer[current_layer.Layer == current_layer_number]
         plt.xticks([])
         plt.yticks([])

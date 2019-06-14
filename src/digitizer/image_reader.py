@@ -65,7 +65,7 @@ class ImageReader:
                 points_array = []
 
                 approx = cv2.approxPolyDP(c, 0.00001*cv2.arcLength(c, True), True)
-                cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 2)
+                cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 5)
                 for point in c:
                     points_array.append(Point(point[0][0], point[0][1]))
                 
@@ -113,7 +113,7 @@ class ImageReader:
 
 
 def main():
-    test = cv2.imread('test3.jpg') 
+    test = cv2.imread('t.png')
     canv, _ = ImageReader(test).prune()
     woop = CSVCreation(_)
     woop.output_csv()

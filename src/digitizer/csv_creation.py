@@ -5,9 +5,10 @@ class CSVCreation:
 
     def output_csv(self):
         f = open("woop.csv", "w")
-        f.write("Layer, x, y\n")
+        f.write("Layer,x,y\n")
         for layer in self.layers:
             for point in layer.points:
                 f.write("%i, %d, %d\n" % (layer.layer_id, point.x, point.y))
+        return "woop.csv"
 
                 
