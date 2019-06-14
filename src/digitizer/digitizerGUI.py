@@ -144,5 +144,5 @@ class Gui:
 
         tkinter.messagebox.askokcancel('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your decive.')
 
-        self.window.quit()
+        #self.window.quit()
 
