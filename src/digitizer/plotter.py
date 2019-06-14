@@ -21,6 +21,7 @@ class plotCreator:
                 layer_count=layer
         for layer_number in range(layer_count):
             plotter(layer_number)
+        returnImage()
 
     def plotter(current_layer_number):
         current_layer = pd.DataFrame(log_data)
