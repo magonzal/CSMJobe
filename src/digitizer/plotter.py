@@ -20,8 +20,8 @@ class plotCreator:
             if(layer>layer_count):
                 layer_count=layer
         for layer_number in range(layer_count):
-            plotter(layer_number)
-        returnImage()
+            self.plotter(layer_number)
+        self.returnImage()
 
     def plotter(self, current_layer_number):
         current_layer = pd.DataFrame(self.log_data)
