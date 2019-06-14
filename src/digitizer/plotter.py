@@ -29,7 +29,7 @@ class plotCreator:
         current_layer = current_layer[current_layer.Layer == current_layer_number]
         plt.xticks([])
         plt.yticks([])
-        plt.plot(current_layer.x, current_layer.y, color='black', linewidth=5.0)
+        plt.plot(current_layer.x, current_layer.y, color='green', linewidth=5.0)
 
     def returnImage(self):
         plt.savefig('log_data.png', transparent='true', dpi=3200)
