@@ -135,7 +135,6 @@ class Gui:
 
         # here is a comment
 
-        exit()
-
+        self.window.quit()
 
 # Create a window and pass it to the Application object

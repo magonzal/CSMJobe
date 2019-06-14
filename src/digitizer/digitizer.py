@@ -19,11 +19,12 @@ from digitizerGUI import Gui
 def main(argv): 
     gui = Gui(tkinter.Tk(), "Geological Digizer V 1.0")
     cv_image = cv2.imread('victory.png')
+    print('here')
     image_reader = ImageReader(cv_image)
     canvas, layers = image_reader.prune()
 
     csv = CSVCreation(layers)
-    plot = plotCreator(csv).getLayers()
+    plotCreator(csv).getLayers()
 
 
 if __name__ == '__main__':
