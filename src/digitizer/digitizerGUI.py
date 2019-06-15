@@ -137,7 +137,7 @@ class Gui:
     def save_image(self):
         # Change filename to match needed format
         self.filename = self.filename[:-3] + "eps"
-        self.canvas.postscript(file=self.filename)
+        self.canvas.postscript(file=self.filename, colormode = 'mono', pagewidth=1000-1, pageheight=501)
         img = Image.open(self.filename)
         # Save image
         img.save("victory.png", "png")
