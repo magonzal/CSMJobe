@@ -20,6 +20,9 @@ from tkinter.colorchooser import askcolor
 from tkinter.filedialog import askopenfilename
 import math
 import subprocess
+import sys
+from PyQt5.QtWidgets import QApplication
+
 
 class Gui:
     DEFAULT_PEN_SIZE = 5.0
@@ -139,6 +142,10 @@ class Gui:
         # Change filename to match needed format
         self.filename = self.filename[:-3] + "eps"
         ps = self.canvas.postscript( colormode = 'color', x = 0, y = 0, height = 514 -113, width = 500 - 113)
+        app = QApplication(sys.argv)
+        screen = app.screens()[0]
+        dpi = screen.physicalDotsPerInch()
+        app.quit()
 
         def open_eps(ps, dpi=300.0):
             img = Image.open(io.BytesIO(ps.encode('utf-8')))
