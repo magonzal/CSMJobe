@@ -141,7 +141,7 @@ class Gui:
     def save_image(self):
         # Change filename to match needed format
         self.filename = self.filename[:-3] + "eps"
-        ps = self.canvas.postscript( colormode = 'color', x = 0, y = 0, height = 514 -113, width = 500 - 113)
+        ps = self.canvas.postscript( colormode = 'color', x = 0, y = 0, height = self.height, width = self.width)
         app = QApplication(sys.argv)
         screen = app.screens()[0]
         dpi = screen.physicalDotsPerInch()
@@ -157,8 +157,8 @@ class Gui:
                 img.thumbnail([round(scale * d) for d in original], Image.ANTIALIAS)
             return img
         # im = Image.open('test.ps')
-        img = open_eps(ps, dpi=119.5)
-        img.save("victory.png", dpi=(119.5, 119.5))
+        img = open_eps(ps, dpi=dpi)
+        img.save("victory.png", dpi=(dpi, dpi))
 
 
         #img = Image.open(self.filename)
