@@ -43,7 +43,7 @@ class Gui:
         self.height, self.width, no_channels = self.cv_img.shape
 
         # Create a canvas that can fit the above image
-        self.canvas = tkinter.Canvas(window, width=self.width, height=self.height+10)
+        self.canvas = tkinter.Canvas(window, width=self.width, height=self.height)
         self.canvas.pack(side='left')
 
         # Use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
@@ -137,7 +137,9 @@ class Gui:
     def save_image(self):
         # Change filename to match needed format
         self.filename = self.filename[:-3] + "eps"
-        self.canvas.postscript(file=self.filename, colormode = 'mono', pagewidth=self.width-1, pageheight=self.height-1)
+        print(self.height)
+        print(self.width)
+        self.canvas.postscript(file=self.filename, colormode = 'mono', pagewidth=self.width - 1, pageheight=self.height - 6)
         img = Image.open(self.filename)
         # Save image
         img.save("victory.png", "png")
