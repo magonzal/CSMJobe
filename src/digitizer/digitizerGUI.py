@@ -18,6 +18,7 @@ import PIL.ImageTk
 import PIL.Image
 from tkinter.colorchooser import askcolor
 from tkinter.filedialog import askopenfilename
+import math
 import subprocess
 
 class Gui:
@@ -137,12 +138,25 @@ class Gui:
     def save_image(self):
         # Change filename to match needed format
         self.filename = self.filename[:-3] + "eps"
-        print(self.height)
-        print(self.width)
-        self.canvas.postscript(file=self.filename, colormode = 'mono', pagewidth=self.width - 1, pageheight=self.height - 6)
-        img = Image.open(self.filename)
+        ps = self.canvas.postscript( colormode = 'color', x = 0, y = 0, height = 514 -113, width = 500 - 113)
+
+        def open_eps(ps, dpi=300.0):
+            img = Image.open(io.BytesIO(ps.encode('utf-8')))
+            original = [float(d) for d in img.size]
+            scale = dpi / 72.0
+            if dpi is not 0:
+                img.load(scale=math.ceil(scale))
+            if scale != 1:
+                img.thumbnail([round(scale * d) for d in original], Image.ANTIALIAS)
+            return img
+        # im = Image.open('test.ps')
+        img = open_eps(ps, dpi=119.5)
+        img.save("victory.png", dpi=(119.5, 119.5))
+
+
+        #img = Image.open(self.filename)
         # Save image
-        img.save("victory.png", "png")
+        #img.save("victory.png", "png")
 
         tkinter.messagebox.askokcancel('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your decive.')
 
