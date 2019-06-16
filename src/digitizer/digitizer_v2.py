@@ -237,6 +237,7 @@ class UploadImage(QWidget):
     def black(self):
         global brushColor
         brushColor = Qt.black
+
     def white(self):
         global brushColor
         brushColor = Qt.white
