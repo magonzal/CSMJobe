@@ -237,16 +237,20 @@ class UploadImage(QWidget):
         self.mQImage2.save(filePath)
 
     def threePx(self):
-        self.brushSize = 3
+        global brushSize
+        brushSize = 3
 
     def fivePx(self):
-        self.brushSize = 5
+        global brushSize
+        brushSize = 5
 
     def sevenPx(self):
-        self.brushSize = 7
+        global brushSize
+        brushSize = 7
 
     def ninePx(self):
-        self.brushSize = 9 
+        global brushSize
+        brushSize = 9 
 
     def black(self):
         global brushColor
