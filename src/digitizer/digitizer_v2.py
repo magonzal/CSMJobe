@@ -179,18 +179,15 @@ class UploadImage(QWidget):
         self.lastPoint = QPoint()
 
         mainMenu = self.parent.menuBar()
-        fileMenu = mainMenu.addMenu("File")
         brushMenu = mainMenu.addMenu("Brush Size")
         brushColor = mainMenu.addMenu("Brush Color")
 
         saveAction = QAction("Save", self)
         saveAction.setShortcut("Ctrl+S")
-        fileMenu.addAction(saveAction)
         saveAction.triggered.connect(self.save)
 
         clearAction = QAction("Clear", self)
         clearAction.setShortcut("Ctrl+C")
-        fileMenu.addAction(clearAction)
 
         threepxAction = QAction("3px", self)
         threepxAction.setShortcut("Ctrl+T")
