@@ -40,6 +40,8 @@ class UploadImage(QWidget):
         self.parent.resize(100, 100)
         self.height = 0
         self.width = 0
+        global brushSize
+        brushSize = 3
         
         # Used to create menubar after the user uploads an image the first time
         self.first_upload = True
@@ -156,7 +158,6 @@ class UploadImage(QWidget):
     # Function to populate the menu bar
     def create_menubar(self):
         self.drawing = False
-        self.brushSize = 2
         self.brushColor = Qt.black
         self.lastPoint = QPoint()
 
@@ -172,22 +173,18 @@ class UploadImage(QWidget):
         clearAction.setShortcut("Ctrl+C")
 
         threepxAction = QAction("3px", self)
-        threepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(threepxAction)
         threepxAction.triggered.connect(self.threePx)
 
         fivepxAction = QAction("5px", self)
-        fivepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(fivepxAction)
         fivepxAction.triggered.connect(self.fivePx)
 
         sevenpxAction = QAction("7px", self)
-        sevenpxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(sevenpxAction)
         sevenpxAction.triggered.connect(self.sevenPx)
 
         ninepxAction = QAction("9px", self)
-        ninepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(ninepxAction)
         ninepxAction.triggered.connect(self.ninePx)
 
@@ -215,16 +212,20 @@ class UploadImage(QWidget):
         self.mQImage2.save(filePath)
 
     def threePx(self):
-        self.brushSize = 3
+        global brushSize
+        brushSize = 3
 
     def fivePx(self):
-        self.brushSize = 5
+        global brushSize
+        brushSize = 5
 
     def sevenPx(self):
-        self.brushSize = 7
+        global brushSize
+        brushSize = 7
 
     def ninePx(self):
-        self.brushSize = 9 
+        global brushSize
+        brushSize = 9 
 
  
 
@@ -234,7 +235,6 @@ class Label(QtWidgets.QLabel):
 
         self.image = QImage(0, 0, QImage.Format_RGB32)
         self.drawing = False
-        self.brushSize = 2
         self.brushColor = Qt.black
         self.lastPoint = QPoint()
 
@@ -255,7 +255,7 @@ class Label(QtWidgets.QLabel):
     def mouseMoveEvent(self, event):
         if event.buttons() & Qt.LeftButton & self.drawing:
             painter = QPainter(self.qimage2)
-            painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+            painter.setPen(QPen(self.brushColor, brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
             painter.drawLine(self.lastPoint, event.pos())
             self.lastPoint = event.pos()
             self.update()
@@ -263,6 +263,8 @@ class Label(QtWidgets.QLabel):
     def mouseReleaseEvent(self, event):
         if event.button == Qt.LeftButton:
             self.drawing = False  
+
+
 
 
 
