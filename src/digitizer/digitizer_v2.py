@@ -208,7 +208,7 @@ class UploadImage(QWidget):
 
         eraseAction = QAction("Erase", self)
         eraseAction.setShortcut("Ctrl+W")
-        eraseMenu.addAction(whiteAction)
+        eraseMenu.addAction(eraseAction)
         eraseAction.triggered.connect(self.white)
 
         greenAction = QAction("Green", self)
