@@ -40,6 +40,7 @@ class UploadImage(QWidget):
         self.parent.resize(100, 100)
         self.height = 0
         self.width = 0
+        
         global brushSize
         brushSize = 3
 
@@ -174,30 +175,37 @@ class UploadImage(QWidget):
         self.lastPoint = QPoint()
 
         mainMenu = self.parent.menuBar()
+        fileMenu = mainMenu.addMenu("File")
         brushMenu = mainMenu.addMenu("Brush Size")
         brushColorMenu = mainMenu.addMenu("Brush Color")
         eraseMenu = mainMenu.addMenu("Erase")
 
         saveAction = QAction("Save", self)
         saveAction.setShortcut("Ctrl+S")
+        fileMenu.addAction(saveAction)
         saveAction.triggered.connect(self.save)
 
         clearAction = QAction("Clear", self)
         clearAction.setShortcut("Ctrl+C")
+        fileMenu.addAction(clearAction)
 
         threepxAction = QAction("3px", self)
+        threepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(threepxAction)
         threepxAction.triggered.connect(self.threePx)
 
         fivepxAction = QAction("5px", self)
+        fivepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(fivepxAction)
         fivepxAction.triggered.connect(self.fivePx)
 
         sevenpxAction = QAction("7px", self)
+        sevenpxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(sevenpxAction)
         sevenpxAction.triggered.connect(self.sevenPx)
 
         ninepxAction = QAction("9px", self)
+        ninepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(ninepxAction)
         ninepxAction.triggered.connect(self.ninePx)
 
@@ -229,20 +237,16 @@ class UploadImage(QWidget):
         self.mQImage2.save(filePath)
 
     def threePx(self):
-        global brushSize
-        brushSize = 3
+        self.brushSize = 3
 
     def fivePx(self):
-        global brushSize
-        brushSize = 5
+        self.brushSize = 5
 
     def sevenPx(self):
-        global brushSize
-        brushSize = 7
+        self.brushSize = 7
 
     def ninePx(self):
-        global brushSize
-        brushSize = 9 
+        self.brushSize = 9 
 
     def black(self):
         global brushColor
@@ -295,8 +299,6 @@ class Label(QtWidgets.QLabel):
     def mouseReleaseEvent(self, event):
         if event.button == Qt.LeftButton:
             self.drawing = False  
-
-
 
 
 
