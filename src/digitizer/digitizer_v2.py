@@ -64,18 +64,21 @@ class UploadImage(QWidget):
 
         # Array of layers (will be used to create CSV when user is done)
         self.layers = None
-    
-    def create_cvobj(self, qimage):
 
-        qimage = qimage.convertToFormat(QImage.Format.Format_RGB32)
+    # Function to convert qimage back into opencv object
+    def create_cvobj(self, qimage):
+        
+        # Format RGB888!!!@!@!@
+        qimage = qimage.convertToFormat(QImage.Format.Format_RGB888)
 
         width = qimage.width()
         height = qimage.height()
 
+        # The 3 is the bytevalue within shape
         ptr = qimage.bits()
-        ptr.setsize(height * width * 4)
+        ptr.setsize(height * width * 3)
         
-        arr = np.array(ptr).reshape(height, width, 4)
+        arr = np.array(ptr).reshape(height, width, 3)
         return arr
 
     def reprune(self):
@@ -87,36 +90,15 @@ class UploadImage(QWidget):
 
         test = self.initiate_prune(cv_obj)
 
-        cv2.imwrite("PRUNED_NOW_FIRST.jpg", cv_obj)
-        cv2.imwrite("PRUNE_ON_PRUNE.jpg", test)
-
         qimage2, h, w = self.create_qimage(test)
 
         self.label1.setPixmap(QPixmap.fromImage(qimage1))
-    
-
-        pix = QPixmap.fromImage(qimage2)
-        pix.scaledToWidth(w)
-        pix.scaledToHeight(h)
-
-        self.label2.setPixmap(pix)
+        self.label2.setPixmap(QPixmap.fromImage(qimage2))
         self.label2.setImage(qimage2)
          
-
         self.qimage1 = qimage1
         self.qimage2 = qimage2
-        
-        print("heit wif: " + str(h) + ", " + str(w))
-
-        print("image 1: " + str(self.qimage1.height()))
-        print("image 1: " + str(self.qimage1.width()))
-  
-        print("image 2 fff: " + str(qimage2.height()))
-        print("image 2 fff: " + str(qimage2.width()))
          
-        print("image 2: " + str(self.qimage2.height())) 
-        print("image 2: " + str(self.qimage2.width()))
-  
     # Function to convert opencv objects into qimages
     # Returns qimage
     def create_qimage(self, cv_obj):
