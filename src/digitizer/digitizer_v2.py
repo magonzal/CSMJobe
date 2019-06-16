@@ -1,6 +1,7 @@
 import sys
 import cv2
 import numpy as np
+import copy
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -40,6 +41,12 @@ class UploadImage(QWidget):
         self.height = 0
         self.width = 0
         
+        global brushSize
+        brushSize = 3
+
+        global brushColor
+        brushColor = Qt.black
+        
         # Used to create menubar after the user uploads an image the first time
         self.first_upload = True
 
@@ -63,35 +70,50 @@ class UploadImage(QWidget):
 
         # Array of layers (will be used to create CSV when user is done)
         self.layers = None
-    
-    def create_cvobjbutt(self, qimage):
 
-        qimage = qimage.convertToFormat(4)
+    def scale(self, cv_obj):
+        if cv_obj.shape[0] > 550: 
+            scale = cv_obj.shape[0]/550
+            cv_obj = cv2.resize(cv_obj, (int(cv_obj.shape[1]/scale), 550))
+        return cv_obj
+        
+    # Function to convert qimage back into opencv object
+    def create_cvobj(self, qimage):
+        
+        # Format RGB888!!!@!@!@
+        qimage = qimage.convertToFormat(QImage.Format.Format_RGB888)
 
         width = qimage.width()
         height = qimage.height()
-        ptr = qimage.bits()
-        ptr.setsize(qimage.byteCount())
-        arr = np.array(ptr).reshape(height, width, 4)
-        return arr
-    def create_cvobj(self, qimage):
-        return cv2.CreateMat(qimage.height, qimage.width, 4)
 
+        # The 3 is the bytevalue within shape
+        ptr = qimage.bits()
+        ptr.setsize(height * width * 3)
+        
+        arr = np.array(ptr).reshape(height, width, 3)
+        return arr
 
     def reprune(self):
-        print("PROONE")
-        self.qimage1 = self.qimage2
+        qimage1 = self.qimage2.copy()
         
-        cv_obj = self.create_cvobj(self.qimage1)
+        cv_obj = self.create_cvobj(qimage1)
+        cv_obj = self.scale(cv_obj)
 
         test = self.initiate_prune(cv_obj)
+        test = self.scale(test)
 
-        self.qimage2, h, w = self.create_qimage(test)
+        qimage2, h, w = self.create_qimage(test)
 
-        self.label1.setPixmap(QPixmap.fromImage(self.qimage1))
-        self.label2.setPixmap(QPixmap.fromImage(self.qimage2))
+        cv2.imwrite("aprune.jpg", cv_obj)
+        cv2.imwrite("bprune.jpg", test)
+
+        self.label1.setPixmap(QPixmap.fromImage(qimage1))
+        self.label2.setPixmap(QPixmap.fromImage(qimage2))
+        self.label2.setImage(qimage2)
          
-  
+        self.qimage1 = qimage1
+        self.qimage2 = qimage2
+         
     # Function to convert opencv objects into qimages
     # Returns qimage
     def create_qimage(self, cv_obj):
@@ -116,11 +138,13 @@ class UploadImage(QWidget):
         
         # Get opencv object -> convert to qimage -> display it
         cvimage = cv2.imread(fname)
+        cvimage = self.scale(cvimage)
         self.qimage1, h, w = self.create_qimage(cvimage)
         self.label1.setPixmap(QPixmap.fromImage(self.qimage1))
           
         # Prune opencv object -> convert prune to qimage -> display it
         prune_image = self.initiate_prune(cvimage)
+        prune_image = self.scale(prune_image)
         self.qimage2, h2, w2 = self.create_qimage(prune_image)
         self.label2.setPixmap(QPixmap.fromImage(self.qimage2))
         self.label2.move(w+10, 0)
@@ -148,59 +172,44 @@ class UploadImage(QWidget):
     # Function to populate the menu bar
     def create_menubar(self):
         self.drawing = False
-        self.brushSize = 2
-        self.brushColor = Qt.black
         self.lastPoint = QPoint()
 
         mainMenu = self.parent.menuBar()
-        fileMenu = mainMenu.addMenu("File")
         brushMenu = mainMenu.addMenu("Brush Size")
-        brushColor = mainMenu.addMenu("Brush Color")
-
-        saveAction = QAction("Save", self)
-        saveAction.setShortcut("Ctrl+S")
-        fileMenu.addAction(saveAction)
-        saveAction.triggered.connect(self.save)
-
-        clearAction = QAction("Clear", self)
-        clearAction.setShortcut("Ctrl+C")
-        fileMenu.addAction(clearAction)
+        brushColorMenu = mainMenu.addMenu("Brush Color")
+        eraseMenu = mainMenu.addMenu("Erase")
 
         threepxAction = QAction("3px", self)
-        threepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(threepxAction)
         threepxAction.triggered.connect(self.threePx)
 
         fivepxAction = QAction("5px", self)
-        fivepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(fivepxAction)
         fivepxAction.triggered.connect(self.fivePx)
 
         sevenpxAction = QAction("7px", self)
-        sevenpxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(sevenpxAction)
         sevenpxAction.triggered.connect(self.sevenPx)
 
         ninepxAction = QAction("9px", self)
-        ninepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(ninepxAction)
         ninepxAction.triggered.connect(self.ninePx)
 
         blackAction = QAction("Black", self)
-        blackAction.setShortcut("Ctrl+B")
-        brushColor.addAction(blackAction)
+        brushColorMenu.addAction(blackAction)
+        blackAction.triggered.connect(self.black)
 
-        whiteAction = QAction("White", self)
-        whiteAction.setShortcut("Ctrl+W")
-        brushColor.addAction(whiteAction)
+        eraseAction = QAction("Erase", self)
+        eraseMenu.addAction(eraseAction)
+        eraseAction.triggered.connect(self.white)
 
         greenAction = QAction("Green", self)
-        greenAction.setShortcut("Ctrl+W")
-        brushColor.addAction(greenAction)
+        brushColorMenu.addAction(greenAction)
+        greenAction.triggered.connect(self.green)
 
         yellowAction = QAction("Yellow", self)
-        yellowAction.setShortcut("Ctrl+R")
-        brushColor.addAction(yellowAction) 
+        brushColorMenu.addAction(yellowAction) 
+        yellowAction.triggered.connect(self.yellow)
 
     def save(self):
         filePath, _ = QFileDialog.getSaveFileName(self, "Save Image", "", "PNG(*.png);;JPEG(*.jpeg *.jpeg);;ALL Files(*.*)")
@@ -210,17 +219,38 @@ class UploadImage(QWidget):
         self.mQImage2.save(filePath)
 
     def threePx(self):
-        self.brushSize = 3
+        global brushSize
+        brushSize = 3
 
     def fivePx(self):
-        self.brushSize = 5
+        global brushSize
+        brushSize = 5
 
     def sevenPx(self):
-        self.brushSize = 7
+        global brushSize
+        brushSize = 7
 
     def ninePx(self):
-        self.brushSize = 9 
+        global brushSize
+        brushSize = 9 
 
+    def black(self):
+        global brushColor
+        brushColor = Qt.black
+
+    def white(self):
+        global brushColor
+        brushColor = Qt.white
+        global brushSize
+        brushSize = 2
+
+    def green(self):
+        global brushColor
+        brushColor = Qt.green
+
+    def yellow(self):
+        global brushColor
+        brushColor = Qt.yellow
  
 
 class Label(QtWidgets.QLabel):
@@ -229,8 +259,6 @@ class Label(QtWidgets.QLabel):
 
         self.image = QImage(0, 0, QImage.Format_RGB32)
         self.drawing = False
-        self.brushSize = 2
-        self.brushColor = Qt.black
         self.lastPoint = QPoint()
 
     def paintEvent(self, e):
@@ -240,7 +268,7 @@ class Label(QtWidgets.QLabel):
         
     def setImage(self, image):
         self.image = image
-        self.qimage2 = self.image
+        self.qimage2 = image
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -250,7 +278,7 @@ class Label(QtWidgets.QLabel):
     def mouseMoveEvent(self, event):
         if event.buttons() & Qt.LeftButton & self.drawing:
             painter = QPainter(self.qimage2)
-            painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+            painter.setPen(QPen(brushColor, brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
             painter.drawLine(self.lastPoint, event.pos())
             self.lastPoint = event.pos()
             self.update()

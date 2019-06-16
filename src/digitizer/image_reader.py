@@ -22,11 +22,11 @@ class ImageReader:
         :param image: OpenCV object
         """
         self.image = image
-        root = tk.Tk()
-        screen_height = root.winfo_screenheight()
-        if self.image.shape[0] >= 650:
-            scale = self.image.shape[0]/650
-            self.image = cv2.resize(self.image, (int(self.image.shape[1]/scale), 650))
+        #root = tk.Tk()
+        #screen_height = root.winfo_screenheight()
+        #if self.image.shape[0] >= 650:
+        #    scale = self.image.shape[0]/650
+        #    self.image = cv2.resize(self.image, (int(self.image.shape[1]/scale), 650))
 
     def set_image(self, img):
         """
@@ -65,7 +65,7 @@ class ImageReader:
                 points_array = []
 
                 approx = cv2.approxPolyDP(c, 0.0001*cv2.arcLength(c, True), True)
-                cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 5)
+                cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 7)
                 for point in c:
                     points_array.append(Point(point[0][0], point[0][1]))
                 
