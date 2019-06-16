@@ -18,7 +18,11 @@ import PIL.ImageTk
 import PIL.Image
 from tkinter.colorchooser import askcolor
 from tkinter.filedialog import askopenfilename
+import math
 import subprocess
+import sys
+from PyQt5.QtWidgets import QApplication
+
 
 class Gui:
     DEFAULT_PEN_SIZE = 5.0
@@ -43,7 +47,7 @@ class Gui:
         self.height, self.width, no_channels = self.cv_img.shape
 
         # Create a canvas that can fit the above image
-        self.canvas = tkinter.Canvas(window, width=self.width, height=self.height+10)
+        self.canvas = tkinter.Canvas(window, width=self.width, height=self.height)
         self.canvas.pack(side='left')
 
         # Use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
@@ -140,10 +144,31 @@ class Gui:
     def save_image(self):
         # Change filename to match needed format
         self.filename = self.filename[:-3] + "eps"
+
         self.canvas.postscript(file=self.filename, height=self.height, width=self.width)
         img = Image.open(self.filename)
-        # Save image
-        img.save("victory.png", "png")
+
+        ps = self.canvas.postscript( colormode = 'color', x = 0, y = 0, height = self.height, width = self.width)
+        app = QApplication(sys.argv)
+        screen = app.screens()[0]
+        dpi = screen.physicalDotsPerInch()
+        app.quit()
+
+        def open_eps(ps, dpi=300.0):
+            img = Image.open(io.BytesIO(ps.encode('utf-8')))
+            original = [float(d) for d in img.size]
+            scale = dpi / 72.0
+            if dpi is not 0:
+                img.load(scale=math.ceil(scale))
+            if scale != 1:
+                img.thumbnail([round(scale * d) for d in original], Image.ANTIALIAS)
+            return img
+        # im = Image.open('test.ps')
+        img = open_eps(ps, dpi=dpi)
+        img.save("victory.png", dpi=(dpi, dpi))
+
+
+
 
         tkinter.messagebox.askokcancel('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your device.')
 
