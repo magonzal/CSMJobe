@@ -176,6 +176,7 @@ class UploadImage(QWidget):
         mainMenu = self.parent.menuBar()
         brushMenu = mainMenu.addMenu("Brush Size")
         brushColorMenu = mainMenu.addMenu("Brush Color")
+        eraseMenu = mainMenu.addMenu("Erase")
 
         saveAction = QAction("Save", self)
         saveAction.setShortcut("Ctrl+S")
@@ -205,10 +206,10 @@ class UploadImage(QWidget):
         brushColorMenu.addAction(blackAction)
         blackAction.triggered.connect(self.black)
 
-        whiteAction = QAction("White", self)
-        whiteAction.setShortcut("Ctrl+W")
-        brushColorMenu.addAction(whiteAction)
-        whiteAction.triggered.connect(self.white)
+        eraseAction = QAction("Erase", self)
+        eraseAction.setShortcut("Ctrl+W")
+        eraseMenu.addAction(whiteAction)
+        eraseAction.triggered.connect(self.white)
 
         greenAction = QAction("Green", self)
         greenAction.setShortcut("Ctrl+W")
@@ -249,6 +250,8 @@ class UploadImage(QWidget):
     def white(self):
         global brushColor
         brushColor = Qt.white
+        global brushSize
+        brushSize = 3
 
     def green(self):
         global brushColor
