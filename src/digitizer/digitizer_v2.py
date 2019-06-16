@@ -42,6 +42,9 @@ class UploadImage(QWidget):
         self.width = 0
         global brushSize
         brushSize = 3
+
+        global brushColor
+        brushColor = Qt.black
         
         # Used to create menubar after the user uploads an image the first time
         self.first_upload = True
@@ -105,7 +108,6 @@ class UploadImage(QWidget):
     # Returns qimage
     def create_qimage(self, cv_obj):
         height, width, byteValue = cv_obj.shape
-        print(byteValue)
         byteValue = byteValue * width
 
         cv2.cvtColor(cv_obj, cv2.COLOR_BGR2RGB, cv_obj)
@@ -158,12 +160,11 @@ class UploadImage(QWidget):
     # Function to populate the menu bar
     def create_menubar(self):
         self.drawing = False
-        self.brushColor = Qt.black
         self.lastPoint = QPoint()
 
         mainMenu = self.parent.menuBar()
         brushMenu = mainMenu.addMenu("Brush Size")
-        brushColor = mainMenu.addMenu("Brush Color")
+        brushColorMenu = mainMenu.addMenu("Brush Color")
 
         saveAction = QAction("Save", self)
         saveAction.setShortcut("Ctrl+S")
@@ -190,19 +191,23 @@ class UploadImage(QWidget):
 
         blackAction = QAction("Black", self)
         blackAction.setShortcut("Ctrl+B")
-        brushColor.addAction(blackAction)
+        brushColorMenu.addAction(blackAction)
+        blackAction.triggered.connect(self.black)
 
         whiteAction = QAction("White", self)
         whiteAction.setShortcut("Ctrl+W")
-        brushColor.addAction(whiteAction)
+        brushColorMenu.addAction(whiteAction)
+        whiteAction.triggered.connect(self.white)
 
         greenAction = QAction("Green", self)
         greenAction.setShortcut("Ctrl+W")
-        brushColor.addAction(greenAction)
+        brushColorMenu.addAction(greenAction)
+        greenAction.triggered.connect(self.green)
 
         yellowAction = QAction("Yellow", self)
         yellowAction.setShortcut("Ctrl+R")
-        brushColor.addAction(yellowAction) 
+        brushColorMenu.addAction(yellowAction) 
+        yellowAction.triggered.connect(self.yellow)
 
     def save(self):
         filePath, _ = QFileDialog.getSaveFileName(self, "Save Image", "", "PNG(*.png);;JPEG(*.jpeg *.jpeg);;ALL Files(*.*)")
@@ -227,6 +232,20 @@ class UploadImage(QWidget):
         global brushSize
         brushSize = 9 
 
+    def black(self):
+        global brushColor
+        brushColor = Qt.black
+    def white(self):
+        global brushColor
+        brushColor = Qt.white
+
+    def green(self):
+        global brushColor
+        brushColor = Qt.green
+
+    def yellow(self):
+        global brushColor
+        brushColor = Qt.yellow
  
 
 class Label(QtWidgets.QLabel):
@@ -235,7 +254,6 @@ class Label(QtWidgets.QLabel):
 
         self.image = QImage(0, 0, QImage.Format_RGB32)
         self.drawing = False
-        self.brushColor = Qt.black
         self.lastPoint = QPoint()
 
     def paintEvent(self, e):
@@ -255,7 +273,7 @@ class Label(QtWidgets.QLabel):
     def mouseMoveEvent(self, event):
         if event.buttons() & Qt.LeftButton & self.drawing:
             painter = QPainter(self.qimage2)
-            painter.setPen(QPen(self.brushColor, brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+            painter.setPen(QPen(brushColor, brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
             painter.drawLine(self.lastPoint, event.pos())
             self.lastPoint = event.pos()
             self.update()
