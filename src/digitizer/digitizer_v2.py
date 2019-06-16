@@ -1,6 +1,7 @@
 import sys
 import cv2
 import numpy as np
+import copy
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -64,38 +65,63 @@ class UploadImage(QWidget):
         # Array of layers (will be used to create CSV when user is done)
         self.layers = None
     
-    def create_cvobjbutt(self, qimage):
+    def create_cvobj(self, qimage):
 
-        qimage = qimage.convertToFormat(4)
+        qimage = qimage.convertToFormat(QImage.Format.Format_RGB32)
 
         width = qimage.width()
         height = qimage.height()
+
         ptr = qimage.bits()
-        ptr.setsize(qimage.byteCount())
+        ptr.setsize(height * width * 4)
+        
         arr = np.array(ptr).reshape(height, width, 4)
         return arr
-    def create_cvobj(self, qimage):
-        return cv2.CreateMat(qimage.height, qimage.width, 4)
-
 
     def reprune(self):
-        print("PROONE")
-        self.qimage1 = self.qimage2
+        qimage1 = self.qimage2.copy()
         
-        cv_obj = self.create_cvobj(self.qimage1)
+        cv_obj = self.create_cvobj(qimage1)
+        
+        tempo = (cv_obj.shape[0], cv_obj.shape[1], 3)
 
         test = self.initiate_prune(cv_obj)
 
-        self.qimage2, h, w = self.create_qimage(test)
+        cv2.imwrite("PRUNED_NOW_FIRST.jpg", cv_obj)
+        cv2.imwrite("PRUNE_ON_PRUNE.jpg", test)
 
-        self.label1.setPixmap(QPixmap.fromImage(self.qimage1))
-        self.label2.setPixmap(QPixmap.fromImage(self.qimage2))
+        qimage2, h, w = self.create_qimage(test)
+
+        self.label1.setPixmap(QPixmap.fromImage(qimage1))
+    
+
+        pix = QPixmap.fromImage(qimage2)
+        pix.scaledToWidth(w)
+        pix.scaledToHeight(h)
+
+        self.label2.setPixmap(pix)
+        self.label2.setImage(qimage2)
          
+
+        self.qimage1 = qimage1
+        self.qimage2 = qimage2
+        
+        print("heit wif: " + str(h) + ", " + str(w))
+
+        print("image 1: " + str(self.qimage1.height()))
+        print("image 1: " + str(self.qimage1.width()))
+  
+        print("image 2 fff: " + str(qimage2.height()))
+        print("image 2 fff: " + str(qimage2.width()))
+         
+        print("image 2: " + str(self.qimage2.height())) 
+        print("image 2: " + str(self.qimage2.width()))
   
     # Function to convert opencv objects into qimages
     # Returns qimage
     def create_qimage(self, cv_obj):
         height, width, byteValue = cv_obj.shape
+        print(byteValue)
         byteValue = byteValue * width
 
         cv2.cvtColor(cv_obj, cv2.COLOR_BGR2RGB, cv_obj)
@@ -240,7 +266,7 @@ class Label(QtWidgets.QLabel):
         
     def setImage(self, image):
         self.image = image
-        self.qimage2 = self.image
+        self.qimage2 = image
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
