@@ -70,6 +70,12 @@ class UploadImage(QWidget):
         # Array of layers (will be used to create CSV when user is done)
         self.layers = None
 
+    def scale(self, cv_obj):
+        if cv_obj.shape[0] > 550: 
+            scale = cv_obj.shape[0]/550
+            cv_obj = cv2.resize(cv_obj, (int(cv_obj.shape[1]/scale), 550))
+        return cv_obj
+        
     # Function to convert qimage back into opencv object
     def create_cvobj(self, qimage):
         
@@ -90,12 +96,15 @@ class UploadImage(QWidget):
         qimage1 = self.qimage2.copy()
         
         cv_obj = self.create_cvobj(qimage1)
-        
-        tempo = (cv_obj.shape[0], cv_obj.shape[1], 3)
+        cv_obj = self.scale(cv_obj)
 
         test = self.initiate_prune(cv_obj)
+        test = self.scale(test)
 
         qimage2, h, w = self.create_qimage(test)
+
+        cv2.imwrite("aprune.jpg", cv_obj)
+        cv2.imwrite("bprune.jpg", test)
 
         self.label1.setPixmap(QPixmap.fromImage(qimage1))
         self.label2.setPixmap(QPixmap.fromImage(qimage2))
@@ -128,11 +137,13 @@ class UploadImage(QWidget):
         
         # Get opencv object -> convert to qimage -> display it
         cvimage = cv2.imread(fname)
+        cvimage = self.scale(cvimage)
         self.qimage1, h, w = self.create_qimage(cvimage)
         self.label1.setPixmap(QPixmap.fromImage(self.qimage1))
           
         # Prune opencv object -> convert prune to qimage -> display it
         prune_image = self.initiate_prune(cvimage)
+        prune_image = self.scale(prune_image)
         self.qimage2, h2, w2 = self.create_qimage(prune_image)
         self.label2.setPixmap(QPixmap.fromImage(self.qimage2))
         self.label2.move(w+10, 0)
