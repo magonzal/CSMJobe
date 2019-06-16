@@ -24,7 +24,7 @@ class ImageReader:
         self.image = image
         root = tk.Tk()
         screen_height = root.winfo_screenheight()
-        if screen_height >= 650:
+        if self.image.shape[0] >= 650:
             scale = self.image.shape[0]/650
             self.image = cv2.resize(self.image, (int(self.image.shape[1]/scale), 650))
 
