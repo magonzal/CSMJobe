@@ -180,57 +180,39 @@ class UploadImage(QWidget):
         self.lastPoint = QPoint()
 
         mainMenu = self.parent.menuBar()
-        fileMenu = mainMenu.addMenu("File")
         brushMenu = mainMenu.addMenu("Brush Size")
         brushColorMenu = mainMenu.addMenu("Brush Color")
         eraseMenu = mainMenu.addMenu("Erase")
 
-        saveAction = QAction("Save", self)
-        saveAction.setShortcut("Ctrl+S")
-        fileMenu.addAction(saveAction)
-        saveAction.triggered.connect(self.save)
-
-        clearAction = QAction("Clear", self)
-        clearAction.setShortcut("Ctrl+C")
-        fileMenu.addAction(clearAction)
-
         threepxAction = QAction("3px", self)
-        threepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(threepxAction)
         threepxAction.triggered.connect(self.threePx)
 
         fivepxAction = QAction("5px", self)
-        fivepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(fivepxAction)
         fivepxAction.triggered.connect(self.fivePx)
 
         sevenpxAction = QAction("7px", self)
-        sevenpxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(sevenpxAction)
         sevenpxAction.triggered.connect(self.sevenPx)
 
         ninepxAction = QAction("9px", self)
-        ninepxAction.setShortcut("Ctrl+T")
         brushMenu.addAction(ninepxAction)
         ninepxAction.triggered.connect(self.ninePx)
 
         blackAction = QAction("Black", self)
-        blackAction.setShortcut("Ctrl+B")
         brushColorMenu.addAction(blackAction)
         blackAction.triggered.connect(self.black)
 
         eraseAction = QAction("Erase", self)
-        eraseAction.setShortcut("Ctrl+W")
         eraseMenu.addAction(eraseAction)
         eraseAction.triggered.connect(self.white)
 
         greenAction = QAction("Green", self)
-        greenAction.setShortcut("Ctrl+W")
         brushColorMenu.addAction(greenAction)
         greenAction.triggered.connect(self.green)
 
         yellowAction = QAction("Yellow", self)
-        yellowAction.setShortcut("Ctrl+R")
         brushColorMenu.addAction(yellowAction) 
         yellowAction.triggered.connect(self.yellow)
 
@@ -260,11 +242,12 @@ class UploadImage(QWidget):
     def black(self):
         global brushColor
         brushColor = Qt.black
+
     def white(self):
         global brushColor
         brushColor = Qt.white
         global brushSize
-        brushSize = 3
+        brushSize = 2
 
     def green(self):
         global brushColor

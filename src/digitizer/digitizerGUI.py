@@ -76,6 +76,9 @@ class Gui:
         self.set_origin_button = Button(self.window, text="Next ->", command=self.changeImg)
         self.set_origin_button.pack(side='top', fill='both', expand=False)
 
+        # Button that allows the user to pick a new image
+        self.select_image = Button(self.window, text="Select Image", command=self.get_image)
+
         # Button that user clicks to let the program know they are done with their edits
         self.done_button = tkinter.Button(self.window, text="Done", command=self.save_image)
         self.done_button.pack(side='bottom', fill='both', expand=False)
@@ -141,6 +144,10 @@ class Gui:
     def save_image(self):
         # Change filename to match needed format
         self.filename = self.filename[:-3] + "eps"
+
+        self.canvas.postscript(file=self.filename, height=self.height, width=self.width)
+        img = Image.open(self.filename)
+
         ps = self.canvas.postscript( colormode = 'color', x = 0, y = 0, height = self.height, width = self.width)
         app = QApplication(sys.argv)
         screen = app.screens()[0]
@@ -161,11 +168,9 @@ class Gui:
         img.save("victory.png", dpi=(dpi, dpi))
 
 
-        #img = Image.open(self.filename)
-        # Save image
-        #img.save("victory.png", "png")
 
-        tkinter.messagebox.askokcancel('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your decive.')
+
+        tkinter.messagebox.askokcancel('!', 'You are now exiting the GUI.  Your updated image has been saved as "victory.png" on your device.')
 
         #self.window.quit()
 
