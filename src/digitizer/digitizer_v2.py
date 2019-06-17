@@ -8,6 +8,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from image_reader import ImageReader
+from csv_creation import CSVCreation
 
 """
 PANE 1: Welcome Page
@@ -22,7 +23,7 @@ class Welcome(QWidget):
         self.labelPic = QLabel(self)
         self.pixmap = QPixmap('logo.png')
         self.labelPic.setPixmap(self.pixmap)
-        self.labelPic.move(50, 50)
+        self.labelPic.move(100, 0)
 
 
         self.label = QLabel("Welcome to the Geologic Digitizer \n \n"
@@ -31,17 +32,17 @@ class Welcome(QWidget):
                             "3. Once done editing, select 'Reprune' \n"
                             "4. After final edits and repruning is complete, select 'Output CSV' "
                             "\n    to export your graphic log to a CSV file \n \n"
-                            "While in the editor, you can select a new image to edit by clicking 'Select'. \n"
+                            "While in the editor, you can select a new image to edit by clicking 'Select'. \n\n"
                             "Click on 'Next' to begin.\n",self)
 
-        self.label.setFixedWidth(1200)
+        self.label.setFixedWidth(300)
 
         self.label.setWordWrap(True)
 
-        self.label.move(50, 250) # Move the Text to a location in the widget
+        self.label.move(50, 210) # Move the Text to a location in the widget
 
         self.ToolsBTN = QPushButton('Next', self) # Create button object
-        self.ToolsBTN.move(50, 600)
+        self.ToolsBTN.move(50, 440)
 
 """
 PANE 2: Upload/Edit/Save Page
@@ -148,6 +149,8 @@ class UploadImage(QWidget):
     def initiate_prune(self, cv_obj):
         pruned, layers = ImageReader(cv_obj).prune()
         self.layers = layers
+
+
         return pruned
     
     # Functionality for the select image button
@@ -309,9 +312,28 @@ class Label(QtWidgets.QLabel):
         if event.button == Qt.LeftButton:
             self.drawing = False  
 
-def Csv(QWidget): 
+class Csv(QWidget): 
     def __init__(self, parent=None):
-        super(Welcome, self).__init__(parent) 
+        super(Csv, self).__init__(parent) 
+
+        parent.menuBar().clear()
+
+        parent.resize(450, 500)
+
+        self.label = QLabel("We made a CSV file hehe", self)
+        self.label.move(50, 50)
+        
+        self.layers = parent.layers
+
+        self.create_csv_file()
+
+        self.digitize_again = QPushButton('Digitize Again', self) # Create button object
+        self.digitize_again.move(50, 100)
+
+    # Call csv creation class to output the csv file
+    def create_csv_file(self):
+        CSVCreation(self.layers).output_csv()
+
 
 
 ########################################################################################
@@ -319,15 +341,16 @@ def Csv(QWidget):
 # Main Window that controls all the widget view or panes
 #   - Pane 1: Welcome Page
 #   - Pane 2: Upload/Edit/Prune
-#   - Pane 3: ???
+#   - Pane 3: CSV File
 #
 ########################################################################################
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
-        self.setGeometry(50, 50, 400, 450)
+        self.setGeometry(50, 50, 400, 500)
         self.startWelcome()
+        self.layers = None
 
     def startWelcome(self):
 
@@ -342,7 +365,7 @@ class MainWindow(QMainWindow):
         self.show()
 
     def startUploadImage(self):
-        
+
         # Setup Widget for Upload page
         self.Window2 = UploadImage(self)
         self.setWindowTitle("Upload Log")
@@ -354,10 +377,14 @@ class MainWindow(QMainWindow):
 
     def startCsv(self):
 
+        self.layers = self.Window2.layers
+
         # Setup Widget for Csv page
         self.Window3 = Csv(self)
         self.setWindowTitle("Output")
         self.setCentralWidget(self.Window3)
+
+        self.Window3.digitize_again.clicked.connect(self.startUploadImage)
 
         self.show()
 
