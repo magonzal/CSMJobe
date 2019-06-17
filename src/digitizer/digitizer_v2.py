@@ -320,7 +320,7 @@ class Csv(QWidget):
 
         parent.resize(450, 500)
 
-        self.label = QLabel("We made a CSV file hehe", self)
+        self.label = QLabel("CSV file created. Saved as log_csv.csv", self)
         self.label.move(50, 50)
         
         self.layers = parent.layers

@@ -13,7 +13,10 @@ logs.  Steps to operate the program are listed below:
        or eraser
     3. Once done editing, select 'Reprune'
     4. After final edits and repruning is complete, select 'Output CSV' to export
-       your graphic log to a CSV file
+       your graphic log to a CSV file.
+    5. Once the CSV file is saved, you will have the option to digitize a new
+       log.  Simply click 'Digitize Again', and you will be brought back to the
+       main page where you can select your next image for edit.
 
 While in the editor, you can select a new image to edit by clicking 'Select'.
 You must click on 'Next' to begin.

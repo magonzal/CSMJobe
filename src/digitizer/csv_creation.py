@@ -9,6 +9,6 @@ class CSVCreation:
         for layer in self.layers:
             for point in layer.points:
                 f.write("%i, %d, %d\n" % (layer.layer_id, point.x, point.y))
-        return "woop.csv"
+        return "log_csv.csv"
 
                 
