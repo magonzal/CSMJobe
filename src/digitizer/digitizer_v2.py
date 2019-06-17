@@ -18,15 +18,30 @@ PANE 1: Welcome Page
 class Welcome(QWidget):
     def __init__(self, parent=None):
         super(Welcome, self).__init__(parent)
-        
-        self.label = QLabel("ASLalkd fjaskdjf laskdjf lasdjf laskdjf alksdjf alsdjf alsdkjflaskd jflaskdj flkasjd flkasjd flkasjd flkasjd flkasjdlf asdjfl kasdf asjdlkfj zlxcvx cvnm,zxn waef aofians doivnzoid vajspodf jpasodjf apsdjf apsdflkzxnv lkzxnlvkn aldnf alskdnfl asnvlkandvl ",self)
-        print(self.label.wordWrap())
-        self.label.setFixedWidth(300)
+
+        self.display_logo = QPixmap('logo.png',self)
+        self.label.setPixmap(pixmap)
+
+        self.label = QLabel("Welcome to the Geologic Digitizer \n \n"
+                            "1. Select an image of a graphic log to edit \n"
+                            "2. Use the toolbar at the top of the page to select brush size, brush color, or eraser \n"
+                            "3. Once done editing, select 'Reprune' \n"
+                            "4. After final edits and repruning is complete, select 'Output CSV' "
+                            "\n    to export your graphic log to a CSV file \n \n"
+                            "While in the editor, you can select a new image to edit by clicking 'Select'. \n"
+                            "Click on 'Next' to begin.\n",self)
+
+        #pixmap = QPixmap('logo.png')
+        #self.label.setPixmap(pixmap)
+
+        self.label.setFixedWidth(1200)
+
         self.label.setWordWrap(True)
+
         self.label.move(50, 50) # Move the Text to a location in the widget
 
         self.ToolsBTN = QPushButton('Next', self) # Create button object
-        self.ToolsBTN.move(50, 350) 
+        self.ToolsBTN.move(50, 400)
 
 """
 PANE 2: Upload/Edit/Save Page
@@ -293,9 +308,6 @@ class Label(QtWidgets.QLabel):
     def mouseReleaseEvent(self, event):
         if event.button == Qt.LeftButton:
             self.drawing = False  
-
-class csvSave(self): 
-
 
 
 ########################################################################################
