@@ -6,7 +6,6 @@ from numpy import ma
 from matplotlib import scale as mscale
 from matplotlib import transforms as mtransforms
 from matplotlib import rcParams
-#get_ipython().run_line_magic('matplotlib', 'inline')
 
 #Plotter function that will draw each layer on top of the other on the same plot
 class plotCreator:
@@ -33,3 +32,8 @@ class plotCreator:
 
     def returnImage(self):
         plt.savefig('log_data.png', transparent='true', dpi=3200)
+
+
+
+
+
