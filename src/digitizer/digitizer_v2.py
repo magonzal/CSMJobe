@@ -19,8 +19,9 @@ class Welcome(QWidget):
     def __init__(self, parent=None):
         super(Welcome, self).__init__(parent)
 
-        self.display_logo = QPixmap('logo.png',self)
-        self.label.setPixmap(pixmap)
+        self.labelPic = QLabel(self)
+        self.pixmap = QPixmap('logo.png')
+        self.labelPic.setPixmap(self.pixmap)
 
         self.label = QLabel("Welcome to the Geologic Digitizer \n \n"
                             "1. Select an image of a graphic log to edit \n"
