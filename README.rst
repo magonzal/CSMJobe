@@ -1,3 +1,5 @@
+.. image:: logo.png
+
 #Geologic Digitizer
 #18 June 2019
 
