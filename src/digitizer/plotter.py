@@ -1,6 +1,11 @@
 #This class takes in a CSV file and, plots, and exports a PNG file.
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
+from numpy import ma
+from matplotlib import scale as mscale
+from matplotlib import transforms as mtransforms
+from matplotlib import rcParams
 
 #Plotter function that will draw each layer on top of the other on the same plot
 class plotCreator:
