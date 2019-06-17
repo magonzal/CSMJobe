@@ -310,6 +310,10 @@ class Label(QtWidgets.QLabel):
         if event.button == Qt.LeftButton:
             self.drawing = False  
 
+def Csv(QWidget): 
+    def __init__(self, parent=None):
+        super(Welcome, self).__init__(parent) 
+
 
 ########################################################################################
 #
@@ -344,6 +348,17 @@ class MainWindow(QMainWindow):
         self.Window2 = UploadImage(self)
         self.setWindowTitle("Upload Log")
         self.setCentralWidget(self.Window2)
+
+        self.Window2.output_csv.clicked.connect(self.startCsv)
+
+        self.show()
+
+    def startCsv(self):
+
+        # Setup Widget for Csv page
+        self.Window3 = Csv(self)
+        self.setWindowTitle("Output")
+        self.setCentralWidget(self.Window3)
 
         self.show()
 
