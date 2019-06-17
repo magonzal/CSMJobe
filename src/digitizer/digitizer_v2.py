@@ -19,14 +19,11 @@ class Welcome(QWidget):
     def __init__(self, parent=None):
         super(Welcome, self).__init__(parent)
 
-<<<<<<< HEAD
-        self.pixmap = QPixmap('logo.png',self)
-        self.label.setPixmap(self, pixmap)
-=======
         self.labelPic = QLabel(self)
         self.pixmap = QPixmap('logo.png')
         self.labelPic.setPixmap(self.pixmap)
->>>>>>> cb40f04e21d47230deac9e3320c26bad4558dcd8
+        self.labelPic.move(50, 50)
+
 
         self.label = QLabel("Welcome to the Geologic Digitizer \n \n"
                             "1. Select an image of a graphic log to edit \n"
@@ -41,10 +38,10 @@ class Welcome(QWidget):
 
         self.label.setWordWrap(True)
 
-        self.label.move(50, 50) # Move the Text to a location in the widget
+        self.label.move(50, 250) # Move the Text to a location in the widget
 
         self.ToolsBTN = QPushButton('Next', self) # Create button object
-        self.ToolsBTN.move(50, 400)
+        self.ToolsBTN.move(50, 600)
 
 """
 PANE 2: Upload/Edit/Save Page
