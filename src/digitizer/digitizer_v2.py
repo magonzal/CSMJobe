@@ -19,8 +19,8 @@ class Welcome(QWidget):
     def __init__(self, parent=None):
         super(Welcome, self).__init__(parent)
 
-        self.display_logo = QPixmap('logo.png',self)
-        self.label.setPixmap(pixmap)
+        self.pixmap = QPixmap('logo.png',self)
+        self.label.setPixmap(self, pixmap)
 
         self.label = QLabel("Welcome to the Geologic Digitizer \n \n"
                             "1. Select an image of a graphic log to edit \n"
@@ -30,9 +30,6 @@ class Welcome(QWidget):
                             "\n    to export your graphic log to a CSV file \n \n"
                             "While in the editor, you can select a new image to edit by clicking 'Select'. \n"
                             "Click on 'Next' to begin.\n",self)
-
-        #pixmap = QPixmap('logo.png')
-        #self.label.setPixmap(pixmap)
 
         self.label.setFixedWidth(1200)
 
