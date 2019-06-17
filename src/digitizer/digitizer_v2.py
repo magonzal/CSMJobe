@@ -18,8 +18,11 @@ PANE 1: Welcome Page
 class Welcome(QWidget):
     def __init__(self, parent=None):
         super(Welcome, self).__init__(parent)
-
-        self.label = QLabel("Welcome", self) # Create object that contains text
+        
+        self.label = QLabel("ASLalkd fjaskdjf laskdjf lasdjf laskdjf alksdjf alsdjf alsdkjflaskd jflaskdj flkasjd flkasjd flkasjd flkasjd flkasjdlf asdjfl kasdf asjdlkfj zlxcvx cvnm,zxn waef aofians doivnzoid vajspodf jpasodjf apsdjf apsdflkzxnv lkzxnlvkn aldnf alskdnfl asnvlkandvl ",self)
+        print(self.label.wordWrap())
+        self.label.setFixedWidth(300)
+        self.label.setWordWrap(True)
         self.label.move(50, 50) # Move the Text to a location in the widget
 
         self.ToolsBTN = QPushButton('Next', self) # Create button object
@@ -85,9 +88,10 @@ class UploadImage(QWidget):
 
         width = qimage.width()
         height = qimage.height()
+        print(width, height)
 
         # The 3 is the bytevalue within shape
-        ptr = qimage.bits()
+        ptr = qimage.constBits()
         ptr.setsize(height * width * 3)
         
         arr = np.array(ptr).reshape(height, width, 3)
@@ -96,7 +100,7 @@ class UploadImage(QWidget):
     def reprune(self):
         qimage1 = self.qimage2.copy()
         
-        cv_obj = self.create_cvobj(qimage1)
+        cv_obj = self.create_cvobj(self.qimage2)
         cv_obj = self.scale(cv_obj)
 
         test = self.initiate_prune(cv_obj)
@@ -107,13 +111,14 @@ class UploadImage(QWidget):
         cv2.imwrite("aprune.jpg", cv_obj)
         cv2.imwrite("bprune.jpg", test)
 
-        self.label1.setPixmap(QPixmap.fromImage(qimage1))
-        self.label2.setPixmap(QPixmap.fromImage(qimage2))
-        self.label2.setImage(qimage2)
-         
         self.qimage1 = qimage1
         self.qimage2 = qimage2
+
+        self.label1.setPixmap(QPixmap.fromImage(self.qimage1))
+        self.label2.setPixmap(QPixmap.fromImage(self.qimage2))
+        self.label2.setImage(self.qimage2)
          
+                 
     # Function to convert opencv objects into qimages
     # Returns qimage
     def create_qimage(self, cv_obj):
@@ -269,12 +274,14 @@ class UploadImage(QWidget):
         global brushColor
         brushColor = Qt.yellow
  
-
+"""
+This is a override class for QLabel. This implements canvas drawing functionality for QLabel objects which isnt possible without overriding. 
+"""
 class Label(QtWidgets.QLabel):
     def __init__(self, parent=None):
         super(Label,self).__init__(parent=parent)
 
-        self.image = QImage(0, 0, QImage.Format_RGB32)
+        self.image = QImage(0, 0, QImage.Format_RGB888)
         self.drawing = False
         self.lastPoint = QPoint()
 
@@ -303,6 +310,8 @@ class Label(QtWidgets.QLabel):
     def mouseReleaseEvent(self, event):
         if event.button == Qt.LeftButton:
             self.drawing = False  
+
+class csvSave(self): 
 
 
 

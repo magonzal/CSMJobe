@@ -53,19 +53,19 @@ class ImageReader:
         :return: Canvas with drawn contours and dictionary points
         """
 
-        thresh = cv2.Canny(self.image, 10, 55)
+        thresh = cv2.Canny(self.image, 1, 300)
         contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
         canvas = np.add(np.zeros(self.image.shape, np.uint8), 255)
         layers = []
         layer_id = 1
         
         for c in contours:
-            if cv2.contourArea(c) > 200:
+            if cv2.contourArea(c) > 150:
                 layer = Layer(layer_id)
                 points_array = []
 
                 approx = cv2.approxPolyDP(c, 0.0001*cv2.arcLength(c, True), True)
-                cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 7)
+                cv2.drawContours(canvas, [approx], -1, (0, 0, 0), 5)
                 for point in c:
                     points_array.append(Point(point[0][0], point[0][1]))
                 
