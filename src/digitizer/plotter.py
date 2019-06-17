@@ -32,8 +32,3 @@ class plotCreator:
 
     def returnImage(self):
         plt.savefig('log_data.png', transparent='true', dpi=3200)
-
-
-
-
-

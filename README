@@ -1,0 +1,50 @@
+Geologic Digitizer
+18 June 2019
+
+This is a geologic digitizer created by computer science students Marcelo
+Gonzales, Jessy Liao, Alexis Ludeman, and Courtney Richardson from the
+Colorado School of Mines for the geology department at their school.
+
+================================= INSTRUCTIONS =================================
+
+
+================================== BACKGROUND ==================================
+"Graphic logs are the most common way of characterizing sedimentary geologic
+rock formations in outcrop and core data.  The term graphic log originates
+from a geologist measuring and drawing graphically, or ‘logging’, a cored or
+outcropping stratigraphic section.  Graphic logs generally have thickness/depth
+on the y axis, and grain size on the x axis.  Many geologists spend weeks in
+the field carefully measuring and logging rock formations at fine-scale in an
+analog, hand-drawn manner. The fine-scale thickness and grain-size data that
+may have taken days or weeks to collect is often never captured digitally in a
+tabular format that can be analyzed. So, while tens of thousands of meters of
+graphic logs measured at fine-scale exist to quantify various geological parameters,
+the data contained in the graphic logs is rarely digitized and available for use.
+
+While software solutions exist to collect graphic log data in the field there
+are thousands of hand-drawn logs that need to be digitized.  This project aims to
+create an executable where a geologist can digitize the rock layers from a hand-
+drawn graphic log.
+
+We hope that the open-source release of this executable will spur the collection of
+quantified, structured, and comparable data that, with continued advances in the
+accessibility of machine-learning to geologists, will lead to new discoveries
+in sedimentary geology." - Zane Jobe
+
+=================================== OVERVIEW ===================================
+This program allows the user to choose an image from their computer, edit the
+image, and then get it traced and pruned so that the outline of the graph is
+saved in a CSV file through its x and y coordinates.  The user will have the
+option to reload images, and erase or draw lines so that the CSV matches as
+closely as possible to the real core sample of rock.  This program can be used to
+digitize legacy data, or keep new data up to date.  This is intended to be open-
+sourced as there were many features that could not be implemented in the time
+provided for the original project.  The goal is for this program to adapt and
+evolve into an extremely useful piece of equipment for geologist around the world.
+
+================================= FUNCTIONALITY =================================
+
+
+each function and what it does
+instalation
+

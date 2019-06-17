@@ -22,11 +22,11 @@ class ImageReader:
         :param image: OpenCV object
         """
         self.image = image
-        root = tk.Tk()
-        screen_height = root.winfo_screenheight()
-        if screen_height >= 650:
-            scale = self.image.shape[0]/650
-            self.image = cv2.resize(self.image, (int(self.image.shape[1]/scale), 650))
+        #root = tk.Tk()
+        #screen_height = root.winfo_screenheight()
+        #if self.image.shape[0] >= 650:
+        #    scale = self.image.shape[0]/650
+        #    self.image = cv2.resize(self.image, (int(self.image.shape[1]/scale), 650))
 
     def set_image(self, img):
         """
@@ -53,14 +53,14 @@ class ImageReader:
         :return: Canvas with drawn contours and dictionary points
         """
 
-        thresh = cv2.Canny(self.image, 10, 55)
+        thresh = cv2.Canny(self.image, 1, 300)
         contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
         canvas = np.add(np.zeros(self.image.shape, np.uint8), 255)
         layers = []
         layer_id = 1
         
         for c in contours:
-            if cv2.contourArea(c) > 200:
+            if cv2.contourArea(c) > 150:
                 layer = Layer(layer_id)
                 points_array = []
 
