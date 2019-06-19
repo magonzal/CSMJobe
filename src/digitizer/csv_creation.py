@@ -4,7 +4,7 @@ class CSVCreation:
         self.layers = layers
 
     def output_csv(self):
-        f = open("woop.csv", "w")
+        f = open("log_csv.csv", "w")
         f.write("Layer,x,y\n")
         for layer in self.layers:
             for point in layer.points:

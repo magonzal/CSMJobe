@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from image_reader import ImageReader
 from csv_creation import CSVCreation
+from plotter import Plotter
 
 """
 PANE 1: Welcome Page
@@ -320,8 +321,9 @@ class Csv(QWidget):
 
         parent.resize(450, 500)
 
-        self.label = QLabel("CSV file created. Saved as log_csv.csv", self)
-        self.label.move(50, 50)
+        self.label = QLabel("CSV file created. Saved as log_csv.csv.\n
+                              Here's a preview", self)
+        self.label.move(50, 40)
         
         self.layers = parent.layers
 
@@ -332,7 +334,17 @@ class Csv(QWidget):
 
     # Call csv creation class to output the csv file
     def create_csv_file(self):
-        CSVCreation(self.layers).output_csv()
+        csv_name = CSVCreation(self.layers).output_csv()
+        plt = Plotter(csv_name)
+        png_name = plt.getLayers()
+        self.lb = QLabel(self)
+        pixmap = QPixmap(png_name)
+        self.lb.resize(300, 500)
+        self.lb.setPixmap(pixmap.scaled(self.lb.size(), Qt.IgnoreAspectRatio))
+        self.lb.move(self.width()/2, self.height()/2)
+        self.show() 
+
+        
 
 
 
